@@ -2,8 +2,19 @@ version: '3'
 services:
   web:
     build: .
+    environment:
+      - RAILS_SYSTEM_TESTING_SCREENSHOT=simple
+      - CHROME_URL=http://chrome:4444/wd/hub
     command: bundle exec rails s -p 3000 -b '0.0.0.0'
     volumes:
       - .:/myapp
     ports:
       - "3000:3000"
+  # chrome for system rails tests
+  chrome:
+    image: selenium/standalone-chrome-debug
+    volumes:
+      # It loves memory as any browser does.
+      - /dev/shm:/dev/shm
+    # it's an alternative to sharing the /dev/shm with host
+    # shm_size: 2g

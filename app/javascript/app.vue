@@ -1,9 +1,9 @@
 <template>
   <div id="app">
     <p>{{ message }}</p>
-    <button v-on:click="fillInRandomNumber">Fill-in a random number</button>
-    <input v-model="number">
+    <input name='number' v-model="number">
     <button v-on:click="checkIsPrime">Is prime?</button>
+    <button v-on:click="fillInRandomNumber">Fill-in a random number</button>
   </div>
 </template>
 
@@ -11,8 +11,8 @@
 export default {
   data: function () {
     return {
-      message: "Hello Vue!",
-      number: 777
+      message: '',
+      number: null
     }
   },
 
@@ -35,14 +35,25 @@ export default {
       };
       
       fetch('/api/prime/check', options)
-        .then(response => response.json())
+        .then(response => {
+          if (response.ok) {
+            return response.json();
+          }
+          
+          return response.json().then(json => {
+            throw new Error(json.error_message);
+          });
+        })
         .then(json => {
           if (json.is_prime) {
-            this.message = `👍 ${json.number} is prime`
+            this.message = `🎉👍 ${json.number} is a prime number`
           } else {
-            this.message = `👎 ${json.number} is not prime`
+            this.message = `👎 ${json.number} is not a prime number`
           }
-        });
+        })
+        .catch(error => {
+          this.message = error.message;
+        })
     }
   } 
 }
