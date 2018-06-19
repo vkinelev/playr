@@ -11,21 +11,16 @@ class Api::PrimeController < ApplicationController
     end
 
     number = params[:number].to_i
-    unless number > 2
+    unless number >= 2
       msg = 'Please provide a natural number greater than 1'
       render json: { error_message: msg }, status: 422
       return
     end
 
-
     render json: { number: number, is_prime: primality_checker.prime?(number) }
   end
 
   private
-
-  def validate_params!
-
-  end
 
   def primality_checker
     Prime
