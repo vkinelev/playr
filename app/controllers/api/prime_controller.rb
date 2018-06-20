@@ -1,8 +1,4 @@
-require 'prime'
-
-class Api::PrimeController < ApplicationController
-  skip_before_action :verify_authenticity_token
-
+class Api::PrimeController < ActionController::API
   def check
     unless params.key?(:number)
       msg = 'JSON should contain "number" in the root. E.g. { number: 777 }'
@@ -17,12 +13,12 @@ class Api::PrimeController < ApplicationController
       return
     end
 
-    render json: { number: number, is_prime: primality_checker.prime?(number) }
+    render json: { number: number, is_prime: primality_tester.prime?(number) }
   end
 
   private
 
-  def primality_checker
-    Prime
+  def primality_tester
+    @primality_tester ||= Primality::Tester.new
   end
 end

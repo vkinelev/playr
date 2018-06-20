@@ -1,5 +1,3 @@
 class PrimeController < ApplicationController
-  def index
-    
-  end
+  def index; end
 end
