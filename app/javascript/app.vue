@@ -24,22 +24,22 @@ export default {
 
     checkIsPrime: function () {
       const number = this.number;
-      
-      const options = { 
-        method: "POST", 
+
+      const options = {
+        method: "POST",
         body: JSON.stringify({ number: number }),
         headers: {
           'Accept': 'application/json',
           'Content-Type': 'application/json'
         }
       };
-      
+
       fetch('/api/prime/check', options)
         .then(response => {
           if (response.ok) {
             return response.json();
           }
-          
+
           return response.json().then(json => {
             throw new Error(json.error_message);
           });
@@ -55,7 +55,7 @@ export default {
           this.message = error.message;
         })
     }
-  } 
+  }
 }
 </script>
 
