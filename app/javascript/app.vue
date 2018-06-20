@@ -25,25 +25,7 @@ export default {
     checkIsPrime: function () {
       const number = this.number;
 
-      const options = {
-        method: "POST",
-        body: JSON.stringify({ number: number }),
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json'
-        }
-      };
-
-      fetch('/api/prime/check', options)
-        .then(response => {
-          if (response.ok) {
-            return response.json();
-          }
-
-          return response.json().then(json => {
-            throw new Error(json.error_message);
-          });
-        })
+      this.postJsonData('/api/prime/check', { number: number })
         .then(json => {
           if (json.is_prime) {
             this.message = `🎉👍 ${json.number} is a prime number`
@@ -54,8 +36,30 @@ export default {
         .catch(error => {
           this.message = error.message;
         })
+    },
+
+    postJsonData: function(url, data) {
+      const options = {
+        method: "POST",
+        body: JSON.stringify(data),
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        }
+      };
+
+      return fetch(url, options)
+        .then(response => {
+          if (response.ok) {
+            return response.json();
+          }
+
+          return response.json().then(json => {
+            throw new Error(json.error_message);
+          });
+        })
     }
-  }
+  },
 }
 </script>
 

@@ -24,7 +24,7 @@ module Primality
         if number <= self.class.max_first_generated_prime
           return self.class.first_primes_hash.key?(number)
         end
-
+ 
         return false if number % 2 == 0  || number % 3 == 0
 
         k = 1

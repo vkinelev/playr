@@ -7,6 +7,7 @@ module Primality
     end
 
     def prime?(number)
+      raise ArgumentError, "a number should be Integer" unless number.kind_of? Integer   
       algorithm.prime?(number)
     end
 

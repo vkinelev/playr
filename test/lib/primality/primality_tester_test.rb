@@ -12,6 +12,13 @@ class PrimalityTesterTest < ActiveSupport::TestCase
     assert_instance_of Primality::Algorithms::RubyBuiltIn, tester.algorithm
   end
 
+  test 'it raises ArgumentError if a non integer value has been passed' do
+    tester = Primality::Tester.new
+    assert_raises(ArgumentError, 'a number should be Integer') do
+      tester.prime?(2.3)
+    end
+  end
+
   test 'it can be initialized to work with a custom algorithm class' do
     algorithm = Minitest::Mock.new
     algorithm.expect(:instance_of?, false, [Symbol])

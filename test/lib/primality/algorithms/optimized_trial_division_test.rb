@@ -11,7 +11,7 @@ class OptimizedTrialDivisionTest < ActiveSupport::TestCase
     assert algorithm.prime?(9999991)
   end
 
-  test 'it returns true if a composite number has been passed' do
+  test 'it returns false if a composite number has been passed' do
     refute algorithm.prime?(1)
     refute algorithm.prime?(4)
     refute algorithm.prime?(9999999)

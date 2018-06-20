@@ -8,12 +8,12 @@ class Api::PrimeControllerTest < ActionDispatch::IntegrationTest
 
   test "returns unprocessable entity status if number is not greater than 1" do
     post api_prime_check_url, params: { number: 1 }
-    assert_response :unprocessable_entity 
+    assert_response :unprocessable_entity
   end
 
   test "successful result includes number and is_prime attributes" do
     post api_prime_check_url, params: { number: 3 }
-    
+
     assert_response :success
     assert_json number: 3, is_prime: true
   end
